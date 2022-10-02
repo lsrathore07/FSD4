@@ -1,5 +1,5 @@
 const config=require("../configs/db.config");
-const Sequelize = require("sequelize");
+const Sequelize = require('sequelize');
 
 
 const sequelize = new Sequelize(
@@ -23,6 +23,23 @@ const db={};
 
 db.Sequelize = Sequelize;
 db.sequelize = sequelize;
+db.Category =require("./category.model")(Sequelize,sequelize);
+db.Product=require("./product.model")(Sequelize,sequelize);
+db.User=require("./user.model")(Sequelize,sequelize);
+db.Role=require("./roles.model")(Sequelize,sequelize);
 
+db.Category.hasMany(db.Product)
+db.Product.belongsTo(db.Category)
+
+db.Role.belongsToMany(db.User,{
+    through:"userRoles",
+    foreignKey:"roleId"
+})
+db.User.belongsToMany(db.Role,{
+    through:"userRoles",
+    foreignKey:"userId"
+})
+
+db.ROLES=["user","admin"]
 
 module.exports=db;
