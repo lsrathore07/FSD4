@@ -1,4 +1,4 @@
-
+  
 module.exports=(Sequelize,sequelize)=>{
 
     const User=sequelize.define("users",{
@@ -20,7 +20,6 @@ module.exports=(Sequelize,sequelize)=>{
             type:Sequelize.STRING,
             allowNull:false
         }
-        
         })
         return User;
 

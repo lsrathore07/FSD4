@@ -20,26 +20,17 @@ db.sequelize.sync({force:false})
 
 //add roles
 
-
-
 // Role.create({
-//     id:4,
+//     id:1,
 //     name:"user"
 // })
 
-// Role.create({
-//     id:5,
-//     name:"admin"
-// })
-
 require("./Routes/auth.routes")(app)
-
-app.use(authJWT.verifyToken);
-
 require("./Routes/category.routes")(app);
 require("./Routes/product.routes")(app);
-;
 require("./Routes/user.routes")(app);
+require("./Routes/cart.routes")(app)
+
 
 app.listen(process.env.PORT,()=>{
     console.log(`application is running on port ${process.env.PORT}`)

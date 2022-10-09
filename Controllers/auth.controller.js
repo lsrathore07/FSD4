@@ -16,9 +16,10 @@ exports.signup= async (req,res)=>{
         password:bcrypt.hashSync(password,8)
     })
 
-    const userRoles=Role.findAll({ where:{name:{[Sequelize.Op.or] : roles}}})
-    await  user.setRoles(userRoles)
-    res.send({message:"User resgistered successfully"});
+    const userRoles=await Role.findAll({ where:{name:{[Sequelize.Op.or] : roles}}})
+    console.log(userRoles)
+    await user.setRoles(userRoles)
+    res.send({message:"User registered successfully"});
 }catch(e){
      res.status(500).send({message:"Something went wrong"});
 }    
@@ -42,7 +43,6 @@ exports.signin=async (req,res)=>{
     if(!isPasswordValid){return res.status(400).send({message:"Invalid Password"})}
  
     const token=jwt.sign({id:user.id},process.env.SECRET_KEY,{})
-    console.log(token)
 
     var roles=[]
 
